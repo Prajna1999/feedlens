@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
   "name": "FeedLens",
-  "version": "0.1.0",
-  "description": "On-device classifier for your Instagram feed exposure.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["https://www.instagram.com/*"],
+  "version": "0.2.0",
+  "description": "Academic-grade feed classifier for Instagram and YouTube.",
+  "permissions": ["storage", "activeTab", "unlimitedStorage"],
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://www.youtube.com/*"
+  ],
   "background": {
     "scripts": ["src/background/background.js"],
     "type": "module"
@@ -12,7 +15,32 @@
   "content_scripts": [
     {
       "matches": ["https://www.instagram.com/*"],
-      "js": ["src/content/instagram.js"],
+      "js": [
+        "src/shared/constants.js",
+        "src/shared/numbers.js",
+        "src/shared/fingerprint.js",
+        "src/shared/topics.js",
+        "src/shared/observer.js",
+        "src/platform/instagram/selectors.js",
+        "src/platform/instagram/extractor.js",
+        "src/platform/instagram/interactions.js",
+        "src/content/instagram.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": [
+        "src/shared/constants.js",
+        "src/shared/numbers.js",
+        "src/shared/fingerprint.js",
+        "src/shared/topics.js",
+        "src/shared/observer.js",
+        "src/platform/youtube/selectors.js",
+        "src/platform/youtube/extractor.js",
+        "src/platform/youtube/interactions.js",
+        "src/content/youtube.js"
+      ],
       "run_at": "document_idle"
     }
   ],

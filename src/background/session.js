@@ -1,4 +1,4 @@
-import { SESSION_WINDOW_MS } from '../shared/constants.js';
+const SESSION_WINDOW_MS = 30 * 60 * 1000;
 
 export function pruneEvents(events, now = Date.now()) {
   return events.filter(e => (now - e.ts) < SESSION_WINDOW_MS);
