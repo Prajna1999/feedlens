@@ -218,18 +218,23 @@ $('btn-export-csv').addEventListener('click', async () => {
   if (!data?.events?.length) return;
 
   const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const sessions = data.sessions || {};
 
-  // Events CSV
-  const evHeader = 'ts,datetime,platform,surface,class,media,topics,handle,contentUrl,caption,hashtags,mentions,publishedAt,duration,viewCount,likeCount,commentCount,locationTag,isSponsored,isPaidPartnership,musicInfo,slideCount,feedPosition,dwellMs';
-  const evRows = data.events.map(e => [
-    e.ts, new Date(e.ts).toISOString(),
-    esc(e.platform), esc(e.surface), esc(e.class), esc(e.media),
-    esc((e.topics||[]).join('|')), esc(e.handle), esc(e.contentUrl), esc(e.caption),
-    esc((e.hashtags||[]).join('|')), esc((e.mentions||[]).join('|')),
-    esc(e.publishedAt), e.duration ?? '', e.viewCount ?? '', e.likeCount ?? '', e.commentCount ?? '',
-    esc(e.locationTag), e.isSponsored|0, e.isPaidPartnership|0,
-    esc(e.musicInfo), e.slideCount ?? '', e.feedPosition, e.dwellMs
-  ].join(','));
+  // Events CSV — session fields (userAgent, screenRes, timezone, language) joined by sessionId
+  const evHeader = 'ts,datetime,sessionId,platform,surface,class,media,topics,handle,contentUrl,caption,hashtags,mentions,publishedAt,duration,viewCount,likeCount,commentCount,locationTag,isSponsored,isPaidPartnership,musicInfo,slideCount,feedPosition,dwellMs,userAgent,screenRes,timezone,language';
+  const evRows = data.events.map(e => {
+    const sess = sessions[e.sessionId] || {};
+    return [
+      e.ts, new Date(e.ts).toISOString(), esc(e.sessionId),
+      esc(e.platform), esc(e.surface), esc(e.class), esc(e.media),
+      esc((e.topics||[]).join('|')), esc(e.handle), esc(e.contentUrl), esc(e.caption),
+      esc((e.hashtags||[]).join('|')), esc((e.mentions||[]).join('|')),
+      esc(e.publishedAt), e.duration ?? '', e.viewCount ?? '', e.likeCount ?? '', e.commentCount ?? '',
+      esc(e.locationTag), e.isSponsored|0, e.isPaidPartnership|0,
+      esc(e.musicInfo), e.slideCount ?? '', e.feedPosition, e.dwellMs,
+      esc(sess.userAgent), esc(sess.screenRes), esc(sess.timezone), esc(sess.language)
+    ].join(',');
+  });
 
   const evCsv = [evHeader, ...evRows].join('\n');
 

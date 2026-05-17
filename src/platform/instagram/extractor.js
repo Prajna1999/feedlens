@@ -4,13 +4,16 @@ FL.instagram = FL.instagram || {};
 const S = FL.instagram.SEL;
 
 FL.instagram.getFollowState = function(card) {
-  // Instagram uses div[role="button"] not <button> for follow — no <header> wrapper either
+  // Instagram uses div[role="button"] not <button> for follow.
+  // Limit to short-text buttons (≤15 chars) — caption containers also carry role="button"
+  // and their textContent can include the word "Follow" if the user typed it in their caption.
   for (const btn of card.querySelectorAll('[role="button"], button')) {
-    const label = (btn.textContent || '').trim();
-    if (label === 'Follow') return 'not-following';
-    if (label === 'Following' || label === 'Unfollow') return 'following';
+    const text = (btn.textContent || '').trim();
+    if (text.length > 15) continue;
+    if (text === 'Follow') return 'not-following';
+    if (text === 'Following' || text === 'Unfollow') return 'following';
   }
-  return 'unknown'; // button absent — own post or not yet rendered
+  return 'unknown';
 };
 
 FL.instagram.classify = function(card) {
@@ -27,6 +30,11 @@ FL.instagram.classify = function(card) {
   const followState = FL.instagram.getFollowState(card);
   if (followState === 'not-following') return 'recommended';
   if (followState === 'following') return 'subscribed';
+
+  // No follow button present. On the home feed, Instagram only shows the Follow button
+  // on posts from accounts you don't follow — organic home feed posts have no button,
+  // meaning you already follow the account.
+  if (location.pathname === '/') return 'subscribed';
   return 'unknown';
 };
 
