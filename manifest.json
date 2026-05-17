@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "FeedLens",
+  "version": "0.1.0",
+  "description": "On-device classifier for your Instagram feed exposure.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://www.instagram.com/*"],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "js": ["src/content/instagram.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": { "48": "icons/icon-48.png", "128": "icons/icon-128.png" }
+  },
+  "browser_specific_settings": {
+    "gecko": { "id": "feedlens@local", "strict_min_version": "115.0" }
+  }
+}

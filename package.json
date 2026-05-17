@@ -1,0 +1,13 @@
+{
+  "name": "feedlens",
+  "version": "1.0.0",
+  "description": "Firefox WebExtension (Manifest V3) that classifies your Instagram feed posts as **Ad / Recommended / Subscribed / Unknown** and shows a 30-minute rolling recap.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

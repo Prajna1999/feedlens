@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FeedLens</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <svg class="lens-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="8" stroke="#f5a623" stroke-width="1.5" fill="none"/>
+      <circle cx="12" cy="12" r="4" stroke="#f5a623" stroke-width="1" fill="none" opacity="0.5"/>
+      <line x1="18.2" y1="18.2" x2="24" y2="24" stroke="#f5a623" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="1.5" fill="#f5a623" opacity="0.7"/>
+    </svg>
+    <div class="header-text">
+      <div class="wordmark">Feed<span>Lens</span></div>
+      <div class="subtitle">Instagram Feed Breakdown</div>
+    </div>
+  </header>
+
+  <!-- Total -->
+  <div class="total-block">
+    <div class="total-number" id="total-count">0</div>
+    <div class="total-label">posts seen</div>
+    <div class="window-badge">30 min</div>
+  </div>
+
+  <!-- Classification rows -->
+  <div class="classes" id="classes-section">
+    <!-- Ads -->
+    <div class="class-row">
+      <div class="class-pill ad">
+        <span class="pill-dot"></span>
+        <span class="pill-label">Ads</span>
+      </div>
+      <div>
+        <div class="bar-track">
+          <div class="bar-fill ad" id="bar-ad" style="width:0%"></div>
+        </div>
+        <div class="class-pct" id="pct-ad">—</div>
+      </div>
+      <div>
+        <div class="class-count" id="count-ad">0</div>
+      </div>
+    </div>
+
+    <!-- Recommended -->
+    <div class="class-row">
+      <div class="class-pill rec">
+        <span class="pill-dot"></span>
+        <span class="pill-label">Recommended</span>
+      </div>
+      <div>
+        <div class="bar-track">
+          <div class="bar-fill rec" id="bar-rec" style="width:0%"></div>
+        </div>
+        <div class="class-pct" id="pct-rec">—</div>
+      </div>
+      <div>
+        <div class="class-count" id="count-rec">0</div>
+      </div>
+    </div>
+
+    <!-- Subscribed -->
+    <div class="class-row">
+      <div class="class-pill sub">
+        <span class="pill-dot"></span>
+        <span class="pill-label">Subscribed</span>
+      </div>
+      <div>
+        <div class="bar-track">
+          <div class="bar-fill sub" id="bar-sub" style="width:0%"></div>
+        </div>
+        <div class="class-pct" id="pct-sub">—</div>
+      </div>
+      <div>
+        <div class="class-count" id="count-sub">0</div>
+      </div>
+    </div>
+
+    <!-- Unknown -->
+    <div class="class-row">
+      <div class="class-pill unk">
+        <span class="pill-dot"></span>
+        <span class="pill-label">Unknown</span>
+      </div>
+      <div>
+        <div class="bar-track">
+          <div class="bar-fill unk" id="bar-unk" style="width:0%"></div>
+        </div>
+        <div class="class-pct" id="pct-unk">—</div>
+      </div>
+      <div>
+        <div class="class-count" id="count-unk">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media breakdown -->
+  <div class="media-row">
+    <div class="media-chip" id="chip-image">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="4" cy="4.5" r="1" fill="currentColor"/><path d="M1.5 8.5l2.5-2.5 2 2 1.5-1.5 3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="count-image">0</span> photos
+    </div>
+    <div class="media-chip" id="chip-video">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="7" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 4.5l2.5-1.5v5l-2.5-1.5V4.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+      <span id="count-video">0</span> reels
+    </div>
+    <div class="media-chip" id="chip-carousel">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="2.5" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/><rect x="2.5" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.1" opacity="0.5"/><rect x="4.5" y="2" width="7" height="1" rx="0.5" stroke="currentColor" stroke-width="0" opacity="0"/></svg>
+      <span id="count-carousel">0</span> carousels
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button id="btn-export">Export JSON</button>
+    <button id="btn-reset">Reset</button>
+  </div>
+
+  <!-- Status -->
+  <div class="statusline">
+    <div class="status-dot inactive" id="status-dot"></div>
+    <span class="status-text" id="status-text">No data yet</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
